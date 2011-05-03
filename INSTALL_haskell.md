@@ -1,4 +1,15 @@
-# Packages from debian
+# Installation Instructions
+    
+    sudo add-apt-repository "deb http://csclub.uwaterloo.ca/~amstan/aichallenge-repo/ /"
+    sudo apt-get update
+    sudo apt-get install <package list>
+
+# Package list
+Since haskell-platform depends on a some opengl stuff, we didn't install the whole thing, we just installed some important dependencies:
+    
+    ghc libghc-cgi-dev libghc-fgl-dev libghc-haskell-src-dev libghc-html-dev libghc-hunit-dev libghc-mtl-dev libghc-network-dev libghc-parallel-dev libghc-parsec3-dev libghc-quickcheck2-dev libghc-regex-base-dev libghc-regex-compat-dev libghc-regex-posix-dev libghc-stm-dev libghc-syb-dev libghc-text-dev libghc-transformers-dev libghc-xhtml-dev libghc-zlib-dev libghc-http-dev libghc-deepseq-dev cabal-install alex happy
+
+# Aquiring packages from debian
 The packages were installed from the debian repository.
 
 To add the repository:
@@ -9,14 +20,9 @@ To add the repository:
 To remove:
     
     sudo apt-add-repository "deb http://http.us.debian.org/debian/ sid main" -r
-    
+    sudo apt-get update  
 
-# Package list
-Since haskell-platform depends on a some opengl stuff, we didn't install the whole thing, we just installed some important dependencies:
-    
-    ghc libghc-cgi-dev libghc-fgl-dev libghc-haskell-src-dev libghc-html-dev libghc-hunit-dev libghc-mtl-dev libghc-network-dev libghc-parallel-dev libghc-parsec3-dev libghc-quickcheck2-dev libghc-regex-base-dev libghc-regex-compat-dev libghc-regex-posix-dev libghc-stm-dev libghc-syb-dev libghc-text-dev libghc-transformers-dev libghc-xhtml-dev libghc-zlib-dev libghc-http-dev libghc-deepseq-dev cabal-install alex happy
-
-# Install Log
+## Install Log
     
     sudo apt-get install ghc libghc-cgi-dev libghc-fgl-dev libghc-haskell-src-dev libghc-html-dev libghc-hunit-dev libghc-mtl-dev libghc-network-dev libghc-parallel-dev libghc-parsec3-dev libghc-quickcheck2-dev libghc-regex-base-dev libghc-regex-compat-dev libghc-regex-posix-dev libghc-stm-dev libghc-syb-dev libghc-text-dev libghc-transformers-dev libghc-xhtml-dev libghc-zlib-dev libghc-http-dev libghc-deepseq-dev cabal-install alex happy
     Reading package lists... Done
@@ -178,7 +184,7 @@ Since haskell-platform depends on a some opengl stuff, we didn't install the who
     Processing triggers for libc-bin ...
     ldconfig deferred processing now taking place
 
-# Deb list:
+## Deb list:
 
     $ ls /var/cache/apt/archives/
     alex_2.3.5-2_i386.deb            libghc-cgi-dev_3001.1.7.4-1+b1_i386.deb       libghc-mtl-dev_2.0.1.0-2+b1_i386.deb          libghc-regex-posix-dev_0.94.4-1+b1_i386.deb    libgmp10_2%3a5.0.1+dfsg-7_i386.deb
