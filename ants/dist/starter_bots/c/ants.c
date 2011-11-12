@@ -95,7 +95,7 @@ void _init_game(struct game_info *game_info, struct game_state *game_state) {
         }
         else if (isdigit(current))
             ++hill_count;
-        else if (current == '!')
+        else if (current & 0x80)
             ++dead_count;
         else if (isupper(current)){
             ++hill_count;
@@ -199,11 +199,14 @@ void _init_game(struct game_info *game_info, struct game_state *game_state) {
                     game_state->my_ants[my_count].id = ++game_state->my_ant_index;
                 else
                     game_state->my_ants[my_count].id = keep_id;
-            } else if (current == '!') {
+            } else if (current & 0x80) {
                 --dead_count;
 
                 game_state->dead_ants[dead_count].row = i;
                 game_state->dead_ants[dead_count].col = j;
+                game_state->dead_ants[dead_count].player = (current & (~0x80));
+                
+                game_info->map[game_info->cols*i + j] = '!';
             } else if (isupper(current)) {
                 --hill_count;
 
@@ -221,7 +224,7 @@ void _init_game(struct game_info *game_info, struct game_state *game_state) {
 
                 game_state->enemy_ants[enemy_count].row = i;
                 game_state->enemy_ants[enemy_count].col = j;
-                game_state->enemy_ants[enemy_count].player = current;
+                game_state->enemy_ants[enemy_count].player = current - 'a';
             } 
         }
     }
@@ -289,25 +292,28 @@ void _init_map(char *data, struct game_info *game_info) {
         int offset = row*game_info->cols + col;
 
         switch (*data) {
-        case 'w':
-            game_info->map[offset] = '%';
-            break;
-        case 'a':
-            if (isdigit(game_info->map[offset]))
-                game_info->map[offset] = var3 - '0' + 'A';
-            else
-                game_info->map[offset] = var3 - '0' + 'a';
-            break;
-        case 'd':
-            game_info->map[offset] = var3 - '0' + '!';
-            break;
-        case 'f':
-            game_info->map[offset] = '*';
-            break;
-        case 'h':
-            game_info->map[offset] = var3;
-            break;
-        default: break;
+
+            case 'w':
+                game_info->map[offset] = '%';
+                break;
+            case 'a':
+                if (isdigit(game_info->map[offset]))
+                    game_info->map[offset] = var3 - '0' + 'A';
+                else
+                   game_info->map[offset] = var3 - '0' + 'a';
+                break;
+            case 'd':
+                game_info->map[offset] = (((unsigned char) (var3 - '0')) + 0x80);
+                break;
+            case 'f':
+                game_info->map[offset] = '*';
+                break;
+            case 'h':
+                game_info->map[offset] = var3;
+                break;
+            default: 
+                break;
+
         }
         data = tmp_ptr + 1;
     }
